@@ -39,9 +39,35 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
+
+Person.prototype.eat = function(food){
+  if(this.stomach.length < 10){
+    this.stomach.push(food);
+  }
+}
+
+
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`
+}
+
+const personOne = new Person('Kay', 26);
+console.log(personOne.toString());
+personOne.eat('tacos');
+personOne.eat('fried chicken');
+personOne.eat('cheeseburger');
+console.log(personOne.stomach);
+personOne.poop();
+console.log(personOne.stomach);
 
 /*
   TASK 2
@@ -57,9 +83,17 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(attributes) {
+  this.model = attributes.model;
+  this.milesPerGallon = attributes.milesPerGallon;
+  this. tank = 0;
+  this.odometer = 0;
 }
+
+Car.prototype.fill = function(gallons){
+  this.tank += gallons;
+}
+
 
 /*
   TASK 3
@@ -68,18 +102,33 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
 
+function Baby(babyAttributes){
+  Person.call(this, babyAttributes);
+  this.favToy = babyAttributes.favToy;
 }
+
+Baby.prototype.play = function(){
+  console.log(`${this.name} is ${this.age} old and love to play with ${this.favToy}`);
+}
+
+const newBaby = new Baby({
+  name: 'Sally',
+  age: '8 months',
+  favToy: 'Rattle',
+});
+
+// console.log(newBaby);
+newBaby.play();
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window/Global Binding meaning, if "this" has nothing to refer to it will default to the window binding
+  2. "this" has implicit binding, meaning whatever is to the left of the dot is what the "this keyword" refers to when calling a function
+  3. "this" has new binding, meaning whenever we create a constructor function the "this" keyword points to the newly created object
+  4. "this" has explicit binding meaining when using .call() .apply() or .bind() we pass what "this" is refering to in the parameters 
 */
 
 
